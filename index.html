@@ -87,7 +87,6 @@
             box-shadow: 10px 10px 0px var(--accent-3);
         }
 
-        /* Toggling now happens on the header */
         .post-header {
             display: flex;
             justify-content: space-between;
@@ -133,7 +132,6 @@
             display: block;
         }
 
-        /* --- NEW: Links & Images Styling --- */
         .post-content a {
             color: var(--accent-2);
             text-decoration: none;
@@ -155,7 +153,6 @@
             filter: grayscale(20%);
         }
 
-        /* --- NEW: Comments Section --- */
         .comments-section {
             margin-top: 2.5rem;
             padding-top: 1.5rem;
@@ -170,63 +167,6 @@
             color: var(--accent-3);
             margin-bottom: 1rem;
             text-transform: uppercase;
-        }
-
-        .comment-form {
-            display: flex;
-            gap: 0.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .comment-input {
-            flex-grow: 1;
-            background: var(--bg-color);
-            border: 1px solid var(--text-main);
-            color: var(--text-main);
-            padding: 0.75rem;
-            font-family: 'Space Mono', monospace;
-            outline: none;
-        }
-        .comment-input:focus {
-            border-color: var(--accent-2);
-        }
-
-        .comment-submit {
-            background: var(--accent-1);
-            color: #fff;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            font-family: 'Space Mono', monospace;
-            font-weight: bold;
-            cursor: pointer;
-            text-transform: uppercase;
-            transition: 0.2s;
-        }
-        .comment-submit:hover {
-            background: var(--text-main);
-            color: var(--bg-color);
-        }
-
-        .comment-list {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .comment-item {
-            background: var(--bg-color);
-            border-left: 3px solid var(--accent-2);
-            padding: 0.75rem 1rem;
-            font-size: 0.95rem;
-            font-family: 'Space Mono', monospace;
-        }
-
-        .comment-date {
-            font-size: 0.75rem;
-            color: #888;
-            display: block;
-            margin-bottom: 0.4rem;
         }
 
         footer {
@@ -248,9 +188,9 @@
     </header>
 
     <main class="post-container">
-        <!-- Post 1 (Added ID for the comment logic) -->
+        
+        <!-- Post 1 -->
         <article class="post" id="post-1">
-            <!-- Toggling now happens by clicking this header div -->
             <div class="post-header" onclick="togglePost('post-1')">
                 <h2 class="post-title">Mathematical Blunder</h2>
                 <span class="post-date">22 Aug, 2026</span>
@@ -273,16 +213,30 @@
                 The sequence breaks. The whole world does not go blind. By the strict laws of logic, there will always be exactly one person left standing, triumphantly looking around with a single eye!<br><br>
                 </p>
 
-                <!-- NEW: Comments Section UI -->
+                <!-- PUBLIC COMMENTS SECTION -->
                 <div class="comments-section">
                     <h3>> Cache_Feedback</h3>
-                    <div class="comment-form">
-                        <input type="text" class="comment-input" id="input-post-1" placeholder="Add an observation...">
-                        <button class="comment-submit" onclick="addComment('post-1')">Submit</button>
-                    </div>
-                    <ul class="comment-list" id="comments-post-1">
-                        <!-- Comments will populate here -->
-                    </ul>
+                    <script src="https://giscus.app/client.js"
+        data-repo="dahalkanak/blog"
+        data-repo-id="R_kgDOT_8nDg"
+        data-category="[ENTER CATEGORY NAME HERE]"
+        data-category-id="[ENTER CATEGORY ID HERE]"
+        data-mapping="specific"
+        data-term="Mathematical Blunder"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="dark"
+        data-lang="en"
+        crossorigin="anonymous"
+        async>
+</script>
+                    <!-- 
+                    PASTE YOUR GISCUS <script> TAG RIGHT HERE!
+                    Make sure the term in the script is set to "Mathematical Blunder"
+                    -->
+
                 </div>
 
             </div>
@@ -309,51 +263,6 @@
         
         // Toggle the clicked one
         element.classList.toggle('open');
-    }
-
-    // --- NEW: Local Storage Comment System ---
-
-    // Load comments when the page opens
-    window.onload = function() {
-        document.querySelectorAll('.post').forEach(post => {
-            loadComments(post.id);
-        });
-    };
-
-    // Pull comments from local storage and display them
-    function loadComments(postId) {
-        const comments = JSON.parse(localStorage.getItem('comments_' + postId)) || [];
-        const list = document.getElementById('comments-' + postId);
-        
-        if (list) {
-            list.innerHTML = '';
-            comments.forEach(comment => {
-                const li = document.createElement('li');
-                li.className = 'comment-item';
-                li.innerHTML = `<span class="comment-date">${comment.date}</span>${comment.text}`;
-                list.appendChild(li);
-            });
-        }
-    }
-
-    // Save a new comment to local storage
-    function addComment(postId) {
-        const input = document.getElementById('input-' + postId);
-        const text = input.value.trim();
-        
-        if (!text) return; // Don't allow empty comments
-
-        const comments = JSON.parse(localStorage.getItem('comments_' + postId)) || [];
-        const newComment = {
-            text: text.replace(/</g, "&lt;"), // Basic protection against HTML injection
-            date: new Date().toLocaleDateString() + ' @ ' + new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
-        };
-        
-        comments.push(newComment);
-        localStorage.setItem('comments_' + postId, JSON.stringify(comments));
-        
-        input.value = ''; // Clear the input field
-        loadComments(postId); // Refresh the list
     }
 </script>
 
