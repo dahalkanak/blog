@@ -5,16 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Schrodinger's Cache</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap');
 
         :root {
             --bg-color: #121212;
-            --grid-color: #242424;
+            --grid-color: #1c1c1c;
             --text-main: #e0e0e0;
+            --text-dim: #8a8a8a;
             --accent-1: #ff0055; /* Neon Pink */
             --accent-2: #00ffcc; /* Neon Cyan */
             --accent-3: #ffcc00; /* Neon Yellow */
-            --card-bg: #1a1a1a;
+            --card-bg: #171717;
         }
 
         * {
@@ -23,44 +24,104 @@
             padding: 0;
         }
 
+        ::selection {
+            background: var(--accent-1);
+            color: var(--bg-color);
+        }
+
         body {
             background-color: var(--bg-color);
-            background-image: 
+            background-image:
                 linear-gradient(var(--grid-color) 1px, transparent 1px),
                 linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
-            background-size: 30px 30px;
+            background-size: 32px 32px;
             color: var(--text-main);
             font-family: 'Space Mono', monospace;
             line-height: 1.6;
-            padding: 2rem 1rem;
+            padding: 3rem 1.25rem 2rem;
         }
 
-        max-container {
+        .max-container {
             max-width: 800px;
             margin: 0 auto;
             display: block;
         }
 
+        /* ===== HEADER / SIGNATURE ELEMENT ===== */
         header {
-            margin-bottom: 3rem;
+            margin-bottom: 3.5rem;
+            padding-bottom: 1.5rem;
             border-bottom: 4px solid var(--text-main);
-            padding-bottom: 1rem;
+            position: relative;
+        }
+
+        .header-top {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
         }
 
         h1 {
-            font-size: 2.5rem;
+            font-size: clamp(2.1rem, 6vw, 2.9rem);
             text-transform: uppercase;
-            letter-spacing: -2px;
+            letter-spacing: -1.5px;
             color: var(--accent-2);
-            text-shadow: 2px 2px 0px var(--text-main);
+            position: relative;
+            display: inline-block;
+            text-shadow:
+                2px 2px 0px var(--text-main),
+                2px 0 0 var(--accent-1),
+                -2px 0 0 var(--accent-1);
+            animation: flicker 6s infinite;
+        }
+
+        /* the "quantum" glitch: title state occasionally shifts, like a cache that hasn't decided what it is yet */
+        @keyframes flicker {
+            0%, 91%, 100% {
+                text-shadow:
+                    2px 2px 0px var(--text-main),
+                    2px 0 0 var(--accent-1),
+                    -2px 0 0 var(--accent-1);
+            }
+            92% {
+                text-shadow:
+                    3px -2px 0px var(--accent-3),
+                    -3px 2px 0px var(--accent-1);
+                color: var(--text-main);
+            }
+            94% {
+                text-shadow:
+                    2px 2px 0px var(--text-main),
+                    2px 0 0 var(--accent-1),
+                    -2px 0 0 var(--accent-1);
+                color: var(--accent-2);
+            }
+        }
+
+        .status-chip {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 2px solid var(--accent-3);
+            color: var(--accent-3);
+            padding: 0.3rem 0.6rem;
+            white-space: nowrap;
+        }
+
+        .status-chip::before {
+            content: '● ';
         }
 
         p.subtitle {
             font-style: italic;
-            color: #888;
-            margin-top: 0.5rem;
+            color: var(--text-dim);
+            margin-top: 0.6rem;
+            font-size: 0.95rem;
         }
 
+        /* ===== POSTS ===== */
         .post-container {
             display: flex;
             flex-direction: column;
@@ -70,66 +131,117 @@
         .post {
             background: var(--card-bg);
             border: 2px solid var(--text-main);
-            padding: 1.5rem;
+            padding: 1.6rem;
             box-shadow: 6px 6px 0px var(--accent-1);
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: transform 0.18s ease, box-shadow 0.18s ease;
         }
 
         .post:nth-child(2n) {
             box-shadow: 6px 6px 0px var(--accent-3);
         }
 
+        .post:nth-child(3n) {
+            box-shadow: 6px 6px 0px var(--accent-2);
+        }
+
         .post:hover {
-            transform: translate(-2px, -2px);
-            box-shadow: 10px 10px 0px var(--accent-1);
+            transform: translate(-3px, -3px);
+            box-shadow: 9px 9px 0px var(--accent-1);
         }
         .post:nth-child(2n):hover {
-            box-shadow: 10px 10px 0px var(--accent-3);
+            box-shadow: 9px 9px 0px var(--accent-3);
+        }
+        .post:nth-child(3n):hover {
+            box-shadow: 9px 9px 0px var(--accent-2);
         }
 
         .post-header {
             display: flex;
             justify-content: space-between;
-            align-items: baseline;
-            margin-bottom: 1rem;
+            align-items: center;
+            gap: 1rem;
             cursor: pointer;
+            user-select: none;
+        }
+
+        .post-header:focus-visible {
+            outline: 2px dashed var(--accent-2);
+            outline-offset: 4px;
+        }
+
+        .post-title-row {
+            display: flex;
+            align-items: baseline;
+            gap: 0.7rem;
+        }
+
+        .post-toggle {
+            font-family: 'Space Mono', monospace;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--accent-1);
+            border: 2px solid var(--accent-1);
+            width: 1.6rem;
+            height: 1.6rem;
+            min-width: 1.6rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.25s ease, background 0.2s ease, color 0.2s ease;
+        }
+
+        .post.open .post-toggle {
+            background: var(--accent-1);
+            color: var(--bg-color);
+            transform: rotate(45deg);
         }
 
         .post-title {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             color: var(--text-main);
+            letter-spacing: -0.5px;
         }
 
         .post-date {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: var(--accent-2);
+            white-space: nowrap;
         }
 
         .post-tags {
-            margin-bottom: 1rem;
+            margin: 1rem 0 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
         }
 
         .tag {
-            background: var(--text-main);
-            color: var(--bg-color);
-            padding: 0.2rem 0.5rem;
-            font-size: 0.8rem;
+            background: transparent;
+            border: 1.5px solid var(--text-main);
+            color: var(--text-main);
+            padding: 0.2rem 0.55rem;
+            font-size: 0.75rem;
             font-weight: bold;
-            margin-right: 0.5rem;
             text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .post-content {
-            display: none; 
+            display: none;
             margin-top: 1.5rem;
             border-top: 1px dashed var(--grid-color);
             padding-top: 1.5rem;
-            font-family: sans-serif; 
-            font-size: 1.1rem;
+            font-family: 'Source Serif 4', serif;
+            font-size: 1.12rem;
+            color: #d4d4d4;
         }
 
         .post.open .post-content {
             display: block;
+        }
+
+        .post-content p {
+            margin-bottom: 0;
         }
 
         .post-content a {
@@ -153,46 +265,63 @@
             filter: grayscale(20%);
         }
 
+        /* ===== COMMENTS ===== */
         .comments-section {
             margin-top: 2.5rem;
-            padding-top: 1.5rem;
+            padding: 1.1rem 1rem;
             border-top: 2px solid var(--grid-color);
-            background-color: rgba(0,0,0,0.2);
-            padding: 1rem;
+            background-color: rgba(0,0,0,0.25);
         }
 
         .comments-section h3 {
             font-family: 'Space Mono', monospace;
-            font-size: 1.1rem;
+            font-size: 1rem;
             color: var(--accent-3);
             margin-bottom: 1rem;
             text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         footer {
             margin-top: 4rem;
             text-align: center;
-            font-size: 0.9rem;
-            color: #666;
+            font-size: 0.85rem;
+            color: var(--text-dim);
             border-top: 2px solid var(--grid-color);
-            padding-top: 1rem;
+            padding-top: 1.2rem;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            h1 { animation: none; }
+            .post, .post-toggle { transition: none; }
+        }
+
+        @media (max-width: 480px) {
+            .post-header { align-items: flex-start; }
+            .post-date { font-size: 0.72rem; }
         }
     </style>
 </head>
 <body>
 
-<max-container>
+<div class="max-container">
     <header>
-        <h1>Schrodinger's Cache</h1>
+        <div class="header-top">
+            <h1>Schrodinger's Cache</h1>
+            <span class="status-chip">state: undetermined</span>
+        </div>
         <p class="subtitle">kuch bhi.</p>
     </header>
 
     <main class="post-container">
-        
+
         <!-- Post 1 -->
         <article class="post" id="post-1">
-            <div class="post-header" onclick="togglePost('post-1')">
-                <h2 class="post-title">Mathematical Blunder</h2>
+            <div class="post-header" onclick="togglePost('post-1')" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();togglePost('post-1');}">
+                <div class="post-title-row">
+                    <span class="post-toggle">+</span>
+                    <h2 class="post-title">Mathematical Blunder</h2>
+                </div>
                 <span class="post-date">22 Aug, 2026</span>
             </div>
             <div class="post-tags">
@@ -201,21 +330,21 @@
             </div>
             <div class="post-content">
                 <p>Gandhi famously said, "<a href="https://en.wikipedia.org/wiki/Eye_for_an_eye" target="_blank">An eye for an eye makes the whole world blind</a>." Philosophically? A beautiful sentiment about forgiveness. Mathematically? Completely false.<br><br>
-                
+
                 <img src="eyeoneye.png" alt="Abstract Math Concepts" class="post-image">
 
-                Let’s run this as a logical sequence. Imagine a closed system—a room full of people, everyone starting with two eyes. Person A takes an eye from Person B. In retaliation, Person B takes an eye from Person A. Both now have one eye left. If this algorithmic loop continues, everyone eventually loses their first eye.<br><br>
-                
+                Let's run this as a logical sequence. Imagine a closed system—a room full of people, everyone starting with two eyes. Person A takes an eye from Person B. In retaliation, Person B takes an eye from Person A. Both now have one eye left. If this algorithmic loop continues, everyone eventually loses their first eye.<br><br>
+
                 Now we enter the second iteration. People with one eye start taking the remaining eyes of others. The number of seeing individuals drops. But let's fast-forward to the very end of this sequence to check the final edge case.<br><br>
-                
+
                 We are left with exactly two people, each possessing a single eye. The second-to-last person takes the eye of the last person. That last person is now completely blind. But who takes the second-to-last person's eye? No one! The rest of the system is already blind and cannot see to retaliate.<br><br>
-                
+
                 The sequence breaks. The whole world does not go blind. By the strict laws of logic, there will always be exactly one person left standing, triumphantly looking around with a single eye!<br><br>
                 </p>
 
                 <!-- PUBLIC COMMENTS SECTION -->
                 <div class="comments-section">
-                    <h3>> Cache_Feedback</h3>
+                    <h3>&gt; Cache_Feedback</h3>
                     <script src="https://giscus.app/client.js"
         data-repo="dahalkanak/blog"
         data-repo-id="R_kgDOT_8nDg"
@@ -232,7 +361,7 @@
         crossorigin="anonymous"
         async>
 </script>
-                    <!-- 
+                    <!--
                     PASTE YOUR GISCUS <script> TAG RIGHT HERE!
                     Make sure the term in the script is set to "Mathematical Blunder"
                     -->
@@ -247,21 +376,18 @@
     <footer>
         <p>&copy; 2026 Kanak. Clearing some cache ;)</p>
     </footer>
-</max-container>
+</div>
 
 <script>
-    // Toggle post visibility
     function togglePost(postId) {
         const element = document.getElementById(postId);
-        
-        // Close all other posts
+
         document.querySelectorAll('.post').forEach(post => {
             if (post.id !== postId) {
                 post.classList.remove('open');
             }
         });
-        
-        // Toggle the clicked one
+
         element.classList.toggle('open');
     }
 </script>
