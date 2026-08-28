@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Schrodinger's Cache</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap');
 
@@ -371,6 +372,99 @@
             </div>
         </article>
 
+        <!-- Post 2 -->
+        <article class="post" id="post-2">
+            <div class="post-header" onclick="togglePost('post-2')" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();togglePost('post-2');}">
+                <div class="post-title-row">
+                    <span class="post-toggle">+</span>
+                    <h2 class="post-title">Absence, Fondness, and the Math Nobody Asked For</h2>
+                </div>
+                <span class="post-date">29 Aug, 2026</span>
+            </div>
+            <div class="post-tags">
+                <span class="tag">Math</span>
+                <span class="tag">Thoughts</span>
+            </div>
+            <div class="post-content">
+                <p>There's a version of this proverb everyone's lived through, even if they've never said it out loud. Someone leaves — for college, for a new job in another city, for a breakup that hasn't quite finished happening yet — and for a while, missing them feels like <em>proof</em> of something. Proof that it mattered. Proof that it wasn't just proximity keeping you together. You replay the good parts. You forget, conveniently, the way they left trash all over in your place </p>
+                <br>
+                <p>And then, at some point, without an obvious trigger, that feeling turns. You stop counting the days. The ache doesn't sharpen anymore, it just goes quiet. And eventually you realize you've been apart so long that "fondness" isn't really the word for what's left.</p>
+                <br>
+                <p>Nobody warns you about that second part. The proverb only ever gives you the first half.</p>
+                <br>
+                <p>So I want to actually work out <em>why</em> — not to be clever about it, but because I think the shape of this curve says something true about how attachment works ( I could claim this actually, personally being a victom of the situation ), and because the math turns out to be more honest than the aphorism.</p>
+
+                <h3 style="font-family: 'Space Mono', monospace; color: var(--accent-3); margin: 2rem 0 1rem; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.5px;">Two things happening at once</h3>
+
+                <p>When you're apart from someone, two separate processes start running in your head, and they pull in opposite directions.</p>
+                <br>
+                <p><strong>The first is idealization.</strong> Without someone in front of you — without the small frictions of actually living around them — your memory quietly does some editing. It keeps the highlight reel and drops the footage of them being tired, or short with you, or just <em>there</em> in an unremarkable way. This is a well-documented tendency, sometimes called rosy retrospection, and it's not a flaw in your memory so much as a feature of how memory works when it isn't being corrected by daily contact. Every day apart, this glow gets a little stronger.</p>
+                <br>
+                <p>But it doesn't grow forever. There's only so much idealizing you can do. A month in, you've basically finished editing the highlight reel — there isn't a lot of new material for your imagination to work with. So this effect <em>saturates</em>. It rises quickly at first, then levels off.</p>
+                <br>
+                <p><strong>The second is attachment decay</strong>, and this is the part the proverb conveniently ignores. Closeness isn't a thing you earn once and keep — it's maintained. It needs new shared moments, small updates, the texture of someone's <em>current</em> life, not just the memory of their old one. Without that upkeep, the bond doesn't stay frozen in place. It erodes. Slowly, and then not so slowly.</p>
+                <br>
+                <p>So you have idealization pulling fondness up, fast at first then flattening out — and decay pulling it down, slower to get going but relentless once it does. The proverb is really just a description of the first few weeks, when the first effect is winning. It says nothing about what happens once the second one catches up.</p>
+
+                <h3 style="font-family: 'Space Mono', monospace; color: var(--accent-3); margin: 2rem 0 1rem; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.5px;">Writing it down</h3>
+
+                <p>If you wanted to actually put numbers to this, you'd model fondness as a baseline plus the <em>idealization gained</em> minus the <em>attachment lost</em>, both of which saturate over time rather than growing without limit:</p>
+
+                <div style="text-align: center; margin: 1.5rem 0; overflow-x: auto;" id="eq-fondness"></div>
+
+                <p>You don't need to sit with this equation — the shape it produces is the whole point, and you can see that shape without ever touching the formula. \(\tau_1\) is roughly "how fast you finish idealizing them" (short — idealization runs out of material quickly). \(\tau_2\) is "how fast the bond actually erodes without contact" (usually longer — attachment is stickier than nostalgia, at least at first). \(A\) and \(B_0\) are just how strong each effect is for this particular relationship.</p>
+                <br>
+                <p>Plot that, and you get a curve that rises, peaks, and then falls — past the peak, every additional day apart is actively working against you, not for you.</p>
+
+                <img src="fondness-curve.png" alt="Fondness vs time apart, showing rise then fall" class="post-image">
+
+                <h3 style="font-family: 'Space Mono', monospace; color: var(--accent-3); margin: 2rem 0 1rem; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.5px;">Where the proverb breaks, specifically</h3>
+
+                <p>There are three moments in that curve worth naming, because each one is a different way the aphorism fails you if you take it literally.</p>
+                <br>
+                <p><strong>The peak.</strong> This is the exact point where idealization and decay are moving at the same rate — where one more day apart stops helping and starts hurting. In a rough model of a few months apart, this can land as early as three or four months in. Past this point, the proverb isn't just incomplete, it's giving you the <em>opposite</em> of correct advice. "Just wait, you'll miss them more" stops being true here.</p>
+                <br>
+                <p><strong>The breakeven.</strong> Keep going, and fondness eventually falls back down to wherever it started — the emotional equivalent of the relationship having never left home. Except now you've also lost the time. In the same rough model, this can land around a year in. A year of separation, and you're not "fonder." You're back to zero, minus the year.</p>
+                <br>
+                <p><strong>Where it settles.</strong> If you wait long enough, both effects run their course, and fondness stops moving — it flattens out at some final level. If the decay was stronger than the idealizing ever was, that final level sits <em>below</em> where you started. Not a slow return to how things were. A quiet settling into something worse, permanently, if nothing else intervenes.</p>
+
+                <h3 style="font-family: 'Space Mono', monospace; color: var(--accent-3); margin: 2rem 0 1rem; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.5px;">The actual point</h3>
+
+                <p>The proverb isn't lying, exactly. It's just describing the very beginning of a curve and presenting it as the whole curve — the same trick a lot of comforting sayings pull. It's true for a while, in the specific window where idealization is outrunning decay, and it becomes false the moment that window closes, silently, with no announcement.</p>
+                <br>
+                <p>And it hides something important: how long that window stays open isn't fixed. It's not a universal property of missing someone. It depends entirely on \(\tau_1\) and \(\tau_2\) — which, stripped of the notation, just means <em>how the relationship was actually built</em>. A relationship sustained by real shared life, habits, inside jokes accumulated over years, decays slowly; the "distance makes it stronger" window can genuinely last a long while. A relationship that was mostly proximity — convenience more than substance — decays fast, and the warm feeling you get in week one is doing a lot of the emotional labor that the actual bond isn't.</p>
+                <br>
+                <p>Which might be the more useful — if less quotable — version of the proverb: <em>absence doesn't make the heart grow fonder. Absence reveals how strong the heart already was.</em> The math doesn't create the difference between those two relationships. It just makes visible what was always going to happen anyway.</p>
+
+                <!-- PUBLIC COMMENTS SECTION -->
+                <div class="comments-section">
+                    <h3>&gt; Cache_Feedback</h3>
+                    <script src="https://giscus.app/client.js"
+        data-repo="dahalkanak/blog"
+        data-repo-id="R_kgDOT_8nDg"
+        data-category="[ENTER CATEGORY NAME HERE]"
+        data-category-id="[ENTER CATEGORY ID HERE]"
+        data-mapping="specific"
+        data-term="Absence, Fondness, and the Math Nobody Asked For"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="dark"
+        data-lang="en"
+        crossorigin="anonymous"
+        async>
+</script>
+                    <!--
+                    PASTE YOUR GISCUS <script> TAG RIGHT HERE!
+                    Make sure the term in the script is set to "Absence, Fondness, and the Math Nobody Asked For"
+                    -->
+
+                </div>
+
+            </div>
+        </article>
+
     </main>
 
     <footer>
@@ -390,6 +484,30 @@
 
         element.classList.toggle('open');
     }
+</script>
+
+<!-- KaTeX: renders the display equation in Post 2, and any inline \(...\) math on the page -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var eqEl = document.getElementById('eq-fondness');
+        if (eqEl && window.katex) {
+            katex.render(
+                "F(t) = F_0 + A\\left(1 - e^{-t/\\tau_1}\\right) - B_0\\left(1 - e^{-t/\\tau_2}\\right)",
+                eqEl,
+                { displayMode: true, throwOnError: false }
+            );
+        }
+        if (window.renderMathInElement) {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "\\(", right: "\\)", display: false }
+                ],
+                throwOnError: false
+            });
+        }
+    });
 </script>
 
 </body>
