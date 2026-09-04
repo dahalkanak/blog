@@ -314,7 +314,10 @@
         <p class="subtitle">kuch bhi.</p>
     </header>
 
-    <!-- Post 2 -->
+    <!-- WRAPS BOTH POSTS -->
+    <main class="post-container">
+
+        <!-- Post 2 -->
         <article class="post" id="post-2">
             <div class="post-header" onclick="togglePost('post-2')" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();togglePost('post-2');}">
                 <div class="post-title-row">
@@ -379,9 +382,29 @@
                 <br>
                 <p>Which might be the more useful — if less quotable — version of the proverb: <em>absence doesn't make the heart grow fonder. Absence reveals how strong the heart already was.</em> The math doesn't create the difference between those two relationships. It just makes visible what was always going to happen anyway.</p>
 
+                <!-- PUBLIC COMMENTS SECTION FOR POST 2 -->
+                <div class="comments-section">
+                    <h3>&gt; Cache_Feedback</h3>
+                    <script src="https://giscus.app/client.js"
+                        data-repo="dahalkanak/blog"
+                        data-repo-id="R_kgDOT_8nDg"
+                        data-category="[ENTER CATEGORY NAME HERE]"
+                        data-category-id="[ENTER CATEGORY ID HERE]"
+                        data-mapping="specific"
+                        data-term="Absence, Fondness, and the Math Nobody Asked For"
+                        data-strict="0"
+                        data-reactions-enabled="1"
+                        data-emit-metadata="0"
+                        data-input-position="bottom"
+                        data-theme="dark"
+                        data-lang="en"
+                        crossorigin="anonymous"
+                        async>
+                    </script>
+                </div>
+            </div> <!-- End of Post 2 Content -->
+        </article> <!-- End of Post 2 -->
 
-
-    <main class="post-container">
 
         <!-- Post 1 -->
         <article class="post" id="post-1">
@@ -410,66 +433,30 @@
                 The sequence breaks. The whole world does not go blind. By the strict laws of logic, there will always be exactly one person left standing, triumphantly looking around with a single eye!<br><br>
                 </p>
 
-                <!-- PUBLIC COMMENTS SECTION -->
+                <!-- PUBLIC COMMENTS SECTION FOR POST 1 -->
                 <div class="comments-section">
                     <h3>&gt; Cache_Feedback</h3>
                     <script src="https://giscus.app/client.js"
-        data-repo="dahalkanak/blog"
-        data-repo-id="R_kgDOT_8nDg"
-        data-category="[ENTER CATEGORY NAME HERE]"
-        data-category-id="[ENTER CATEGORY ID HERE]"
-        data-mapping="specific"
-        data-term="Mathematical Blunder"
-        data-strict="0"
-        data-reactions-enabled="1"
-        data-emit-metadata="0"
-        data-input-position="bottom"
-        data-theme="dark"
-        data-lang="en"
-        crossorigin="anonymous"
-        async>
-</script>
-                    <!--
-                    PASTE YOUR GISCUS <script> TAG RIGHT HERE!
-                    Make sure the term in the script is set to "Mathematical Blunder"
-                    -->
-
+                        data-repo="dahalkanak/blog"
+                        data-repo-id="R_kgDOT_8nDg"
+                        data-category="[ENTER CATEGORY NAME HERE]"
+                        data-category-id="[ENTER CATEGORY ID HERE]"
+                        data-mapping="specific"
+                        data-term="Mathematical Blunder"
+                        data-strict="0"
+                        data-reactions-enabled="1"
+                        data-emit-metadata="0"
+                        data-input-position="bottom"
+                        data-theme="dark"
+                        data-lang="en"
+                        crossorigin="anonymous"
+                        async>
+                    </script>
                 </div>
+            </div> <!-- End of Post 1 Content -->
+        </article> <!-- End of Post 1 -->
 
-            </div>
-        </article>
-
-        
-                <!-- PUBLIC COMMENTS SECTION -->
-                <div class="comments-section">
-                    <h3>&gt; Cache_Feedback</h3>
-                    <script src="https://giscus.app/client.js"
-        data-repo="dahalkanak/blog"
-        data-repo-id="R_kgDOT_8nDg"
-        data-category="[ENTER CATEGORY NAME HERE]"
-        data-category-id="[ENTER CATEGORY ID HERE]"
-        data-mapping="specific"
-        data-term="Absence, Fondness, and the Math Nobody Asked For"
-        data-strict="0"
-        data-reactions-enabled="1"
-        data-emit-metadata="0"
-        data-input-position="bottom"
-        data-theme="dark"
-        data-lang="en"
-        crossorigin="anonymous"
-        async>
-</script>
-                    <!--
-                    PASTE YOUR GISCUS <script> TAG RIGHT HERE!
-                    Make sure the term in the script is set to "Absence, Fondness, and the Math Nobody Asked For"
-                    -->
-
-                </div>
-
-            </div>
-        </article>
-
-    </main>
+    </main> <!-- End of Post Container -->
 
     <footer>
         <p>&copy; 2026 Kanak. Clearing some cache ;)</p>
